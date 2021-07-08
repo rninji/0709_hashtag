@@ -1,0 +1,13 @@
+<h1>#{{tag}}</h1>
+<h3>해시태그를 포함한 글 {{tag_posts.count}}개</h3>
+<div>
+    {% for post in tag_posts %}
+    <a href="{% url 'detail' index=post.pk %}">{{ post.name }}
+        <br>
+        {% if post.image %}
+        <img src="{{post.image.url}}" width=200><br>
+        {% endif %}
+    </a>
+    <br>
+    {% endfor %}
+</div>

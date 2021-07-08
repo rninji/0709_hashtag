@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detail</title>
+</head>
+
+<body>
+
+    <!-- 상품 정보 -->
+    <h1>{{post.name}}</h1>
+    <br>
+    {% if post.image %}
+    <img src="{{post.image.url}}" height=400><br>
+    {% endif %}
+    <p>Price : {{post.price}}원</p>
+    <p>Shop : <a href="{{post.shop}}">{{post.shop}}</a></p>
+    <p>Type : {{post.type}}</p>
+    <a href={% url 'home' %}>홈으로</a>
+    <a href={% url 'delete' pk=post.pk %}>삭제하기</a>
+
+    <!-- tag 입력 -->
+    <form action="{% url 'tag_add' pk=post.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="name">
+        <input type="submit" value="해시태그 추가">
+    </form>
+
+    <!-- tag 출력 -->
+    <p>
+        {% for t in post.tags.all %}
+        <b>#{{t.name}}</b>
+        <a href="{% url 'tag_delete' pk=post.pk tag_pk=t.pk %}">X</a>
+        {% endfor %}
+    </p>
+
+</body>
+
+</html>
